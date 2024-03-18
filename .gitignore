@@ -1,0 +1,21 @@
+# Dependency directories
+node_modules/
+
+# Environment configuration
+.env
+
+# Sequelize migrations
+src/models/migrations/
+
+# Logs
+logs/
+*.log
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
