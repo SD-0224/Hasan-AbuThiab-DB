@@ -14,5 +14,16 @@ const createUser = async (req, res) => {
     throw err;
   }
 };
-
-export default createUser;
+const getAllUsers = async (req,res) =>
+{
+  try{
+    const users = await db.User.findAll();
+    res.render('userList', {users: users});
+  }
+  catch(err)
+  {
+    console.log("error getting users");
+    throw err;
+  }
+}
+export  {createUser, getAllUsers};

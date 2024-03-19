@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/style.css">
+
+  <title>All Posts</title>
+</head>
+<body>
+  <h1>All Posts</h1>
+  <ul>
+    <% posts.forEach(post => { %>
+      <li>
+        <h2><%= post.title %></h2>
+        <p><%= post.content %></p>
+        <p><strong>Author:</strong> <%= post.User.username %></p>
+        <p><strong>Categories:</strong>
+          <% post.Categories.forEach(category => { %>
+            <%= category.name %>
+          <% }); %>
+        </p>
+        <h3>Comments:</h3>
+        <ul>
+          <% post.Comments.forEach(comment => { %>
+            <li><%= comment.content %> - <em><%= comment.User.username %></em></li>
+          <% }); %>
+        </ul>
+        <a href="/posts/<%= post.id %>/createCategory"><button>Create Category</button></a>
+      </li>
+    <% }); %>
+  </ul>
+  <a href="/posts/create"><button>Create New Post</button></a>
+
+</body>
+</html>

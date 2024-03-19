@@ -1,0 +1,20 @@
+<!-- createCategory.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Category for Post</title>
+  <link rel="stylesheet" href="/styles/style.css">
+
+</head>
+<body>
+  <h1>Create Category for Post</h1>
+  <form action="/posts/<%= postId %>/createCategory" method="POST">
+    <label for="categoryName">Category Name:</label>
+    <input type="text" id="categoryName" name="categoryName" required>
+    <button type="submit">Create Category</button>
+  </form>
+</body>
+</html>

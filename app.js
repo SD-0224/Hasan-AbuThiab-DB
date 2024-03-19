@@ -32,7 +32,7 @@ db.sequelize.authenticate()
   });
 
  // Serve static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 // Set views directory and view engine
 app.set('views', path.join(__dirname, 'src', 'views'));
