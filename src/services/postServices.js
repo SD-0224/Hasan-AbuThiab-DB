@@ -2,9 +2,9 @@ import db from '../models/Index.js';
 
  const getAllPosts = async () => {
   try {
-    const posts = await await db.Post.findAll({
+    const posts = await db.Post.findAll({
         include: [
-          { model: db.Comment },
+          { model: db.Comment, include: [{ model: db.User }] }, 
           { model: db.User },
           { model: db.Category }
         ]
@@ -88,6 +88,69 @@ const createCategoryForPost = async (postId, categoryName) =>
         throw new Error('Failed to create categ');
     }
 }
- const postService ={ getAllPosts, getPostById, createPost, deletePost, updatePost, createCategoryForPost};
+
+const createCommentForPost = async (postId,userId, commentContent) => 
+{
+    console.log(commentContent)
+    try
+    {
+        const post = await db.Post.findByPk(postId);
+        const user = await db.User.findByPk(userId);
+        if (!post) {
+            throw new Error('Post not found');
+        }
+        const comment = await db.Comment.create({
+            content: commentContent
+        });
+        await post.addComment(comment);
+        await user.addComment(comment);
+        
+        return comment;
+    }
+    catch(error)
+    {
+        console.error('Error creating categ:', error);
+        throw new Error('Failed to create categ');
+    }
+}
+const getAllCategoriesForPost = async (postId) => 
+{
+    try
+    {
+        const post = await db.Post.findByPk(postId);
+        if (!post) {
+            throw new Error('Post not found');
+        }
+        const categories = await post.getCategories();
+        return categories;
+    }
+    catch(error)
+    {
+        console.error('Error creating categ:', error);
+        throw new Error('Failed to create categ');
+    }
+}
+
+const getAllCommentsForPost = async (postId) =>
+{
+    try
+    {
+        const post = await db.Post.findByPk(postId);
+        if (!post) {
+            throw new Error('Post not found');
+        }
+        const comments = await post.getComments({
+            include: db.User // Include the User model to fetch associated users
+        });
+        return comments;
+    }
+    catch(error)
+    {
+        console.error('Error creating categ:', error);
+        throw new Error('Failed to create categ');
+    }
+}
+
+ const postService ={ getAllPosts, getPostById, createPost, deletePost, updatePost, createCategoryForPost, createCommentForPost, getAllCategoriesForPost, getAllCommentsForPost};
 
  export default postService;

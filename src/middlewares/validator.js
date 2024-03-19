@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body, param} from 'express-validator';
 import db from "../models/Index.js";
 
 export const createPostValidator = [
@@ -24,3 +24,36 @@ export const createUserValidator = [
     }
   }),
 ];
+export const createCategoryValidator = [
+  // Validate category name
+  param('postId')
+  .isInt().withMessage('Invalid post ID')
+  .custom(async (value, { req }) => {
+    const post = await db.Post.findByPk(value);
+    if (!post) {
+      throw new Error('Post does not exist');
+    }
+  }),  body('categoryName').notEmpty().withMessage('Category name is required'),
+];
+
+export const createCommentValidator =
+[
+  param('postId')
+  .isInt().withMessage('Invalid post ID')
+  .custom(async (value, { req }) => {
+    const post = await db.Post.findByPk(value);
+    if (!post) {
+      throw new Error('Post does not exist');
+    }
+  }),
+    body('content').notEmpty().withMessage('Comment content is required'),
+    body('userId').notEmpty()
+    .isInt().withMessage('Invalid user ID')
+    .custom(async (value, { req }) => {
+      const user = await db.User.findByPk(value);
+      if (!user) {
+        throw new Error('User does not exist');
+      }
+    })
+
+]

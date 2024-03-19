@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Details</title>
+</head>
+<body>
+  <h1>User Details</h1>
+  <% if (user) { %>
+    <h2><%= user.username %></h2>
+    <p><strong>Email:</strong> <%= user.email %></p>
+    <h3>Posts:</h3>
+    <ul>
+      <% user.Posts.forEach(post => { %>
+        <li>
+          <h4><%= post.title %></h4>
+          <p><%= post.content %></p>
+          <h5>Comments:</h5>
+          <ul>
+            <% post.Comments.forEach(comment => { %>
+              <li><%= comment.content %> - <em><%= comment.User.username %></em></li>
+            <% }); %>
+          </ul>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>User not found</p>
+  <% } %>
+</body>
+</html>

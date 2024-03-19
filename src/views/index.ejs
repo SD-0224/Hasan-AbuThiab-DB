@@ -26,7 +26,15 @@
             <li><%= comment.content %> - <em><%= comment.User.username %></em></li>
           <% }); %>
         </ul>
+        <a href="/posts/update/<%= post.id %>"><button>Update Post</button></a>
+        <a href="/posts/<%= post.id %>/categories"><button>get Categories</button></a>
+
         <a href="/posts/<%= post.id %>/createCategory"><button>Create Category</button></a>
+
+        <a href="/posts/<%= post.id %>/comments"><button>Get Comments</button></a>
+
+        <a href="/posts/<%= post.id %>/createComments"><button>Create Comments</button></a>
+
       </li>
     <% }); %>
   </ul>

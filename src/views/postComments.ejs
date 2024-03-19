@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Comment for Post</title>
+  <link rel="stylesheet" href="/styles/style.css">
+
+</head>
+<body>
+  <h1>Create Comment for Post</h1>
+  <form action="/posts/<%= postId %>/createComments" method="POST">
+    <label for="content">Comment:</label>
+    <textarea id="content" name="content" required></textarea>
+    <input type="text" id="userId" name="userId" required>
+
+    <button type="submit">Create Comment</button>
+  </form>
+</body>
+</html>

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import PostController from '../controllers/postController.js';
-import { createPostValidator } from '../middlewares/validator.js';
+import { createPostValidator, createCommentValidator, createCategoryValidator} from '../middlewares/validator.js';
 const router =  Router();
 
 router.get('/create', (req, res) => {
@@ -11,16 +11,23 @@ router.get('/', PostController.getAllPosts);
 
 
 // router.get('/:postId', PostController.getPostById);
-// router.put('/:postId', PostController.updatePostById);
+
+router.get('/update/:postId', PostController.renderUpdate );
+router.put('/update/:postId', createPostValidator, PostController.updatePostById);
 // router.delete('/:postId', PostController.deletePostById);
 router.get('/:postId/createCategory', (req, res) => {
     const postId = req.params.postId;
 
     res.render('createCategory',{postId}); // Render the createPost.ejs view
 });
-router.post('/:postId/createCategory', PostController.createCategory);
-// router.get('/:postId/categories', PostController.getCategoriesForPost);
-// router.post('/:postId/comments', PostController.createCommentForPost);
-// router.get('/:postId/comments', PostController.getCommentsForPost);
+router.post('/:postId/createCategory',createCategoryValidator, PostController.createCategory);
+router.get('/:postId/categories', PostController.getCategoriesForPost);
+router.get('/:postId/createComments', (req, res) => {
+    const postId = req.params.postId;
+
+    res.render('postComments',{postId}); // Render the createPost.ejs view
+});
+router.post('/:postId/createComments',createCommentValidator, PostController.createComment);
+router.get('/:postId/comments', PostController.getAllCommentsForPost);
 
 export default router;

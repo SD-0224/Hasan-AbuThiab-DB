@@ -11,12 +11,16 @@
   <ul>
     <% users.forEach(user => { %>
     <li>
-      <span><%= user.username %></span>
+      <a href="/users/<%= user.id%>"><span><%= user.username %></span></a>
       <span><%= user.email %></span>
+      <a href="/users/update/<%= user.id%>"> Update User</a>
+      <button type="button" onclick="deleteFile('<%= user.id%>')">Delete User</button>
+
     </li>
     
     <% }); %>
   </ul>
   <a href="/users/create"><button>Create New User</button></a>
 </body>
+<script src="/scripts.js"></script>
 </html>
