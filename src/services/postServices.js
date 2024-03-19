@@ -18,7 +18,13 @@ const getAllPosts = async () => {
 
 const getPostById = async (postId) => {
   try {
-    const post = await db.Post.findByPk(postId);
+    const post = await db.Post.findByPk(postId, {
+      include: [
+        { model: db.Comment, include: [{ model: db.User }] },
+        { model: db.User },
+        { model: db.Category },
+      ],
+    });
     if (!post) {
       throw new Error("Post not found");
     }
@@ -45,7 +51,7 @@ const updatePost = async (postId, updatedData) => {
     if (!post) {
       throw new Error("Post not found");
     }
-    await post.update(updatedData);
+    await post.update(updatedData, { fields: ["title", "content"] });
     return post;
   } catch (error) {
     console.error("Error updating post:", error);

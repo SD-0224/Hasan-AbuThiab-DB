@@ -8,7 +8,7 @@ import {
 const router = Router();
 
 router.get("/create", (req, res) => {
-  res.render("createPost"); // Render the createPost.ejs view
+  res.render("createPost"); 
 });
 router.post("/create", createPostValidator, PostController.createPost);
 router.get("/", PostController.getAllPosts);
@@ -19,10 +19,10 @@ router.put(
   createPostValidator,
   PostController.updatePostById
 );
-router.delete("/:postId", PostController.deletePost);
+router.delete("/delete/:postId", PostController.deletePost);
 router.get("/:postId/createCategory", (req, res) => {
   const postId = req.params.postId;
-  res.render("createCategory", { postId }); // Render the createPost.ejs view
+  res.render("createCategory", { postId }); 
 });
 router.post(
   "/:postId/createCategory",
@@ -32,7 +32,7 @@ router.post(
 router.get("/:postId/categories", PostController.getCategoriesForPost);
 router.get("/:postId/createComments", (req, res) => {
   const postId = req.params.postId;
-  res.render("postComments", { postId }); // Render the createPost.ejs view
+  res.render("postComments", { postId }); 
 });
 router.post(
   "/:postId/createComments",

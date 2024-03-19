@@ -26,7 +26,10 @@
             <li><%= comment.content %> - <em><%= comment.User.username %></em></li>
           <% }); %>
         </ul>
+        <a href="/posts/<%= post.id %>"> Details</a>
         <a href="/posts/update/<%= post.id %>"><button>Update Post</button></a>
+        <button type="button" onclick="deletePost('<%= post.id%>')">Delete Post</button>
+
         <a href="/posts/<%= post.id %>/categories"><button>get Categories</button></a>
 
         <a href="/posts/<%= post.id %>/createCategory"><button>Create Category</button></a>
@@ -41,4 +44,6 @@
   <a href="/posts/create"><button>Create New Post</button></a>
 
 </body>
+<script src="/scripts.js"></script>
+
 </html>
