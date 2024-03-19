@@ -1,15 +1,15 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes } from "sequelize";
 
-const definePostModel = sequelize => {
-  return sequelize.define('Post', {
+const definePostModel = (sequelize) => {
+  return sequelize.define("Post", {
     title: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     content: {
       type: DataTypes.TEXT,
-      allowNull: false
-    }
+      allowNull: false,
+    },
   });
 };
 

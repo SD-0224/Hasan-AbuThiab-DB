@@ -1,13 +1,11 @@
+import { DataTypes } from "sequelize";
 
-import { DataTypes } from 'sequelize';
-
-const defineCategoryModel = sequelize => {
-  return sequelize.define('Category', {
+const defineCategoryModel = (sequelize) => {
+  return sequelize.define("Category", {
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
-
   });
 };
 
