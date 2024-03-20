@@ -20,13 +20,13 @@ const getUserById = async (userId) => {
       ],
     });
     if (!user) {
-      throw new Error("User not found");
+      throw new Error("User ID does not exist");
     }
     console.log(user);
     return user;
   } catch (error) {
-    console.error("Error fetching User by ID:", error);
-    throw new Error("Failed to fetch User by ID");
+    console.error("error getting the user:", error);
+    throw new Error("error getting the user");
   }
 };
 

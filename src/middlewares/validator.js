@@ -2,8 +2,8 @@ import { body, param } from "express-validator";
 import db from "../models/Index.js";
 
 export const createPostValidator = [
-  body("title").notEmpty().isString(),
-  body("content").notEmpty().isString(),
+  body("title").notEmpty().isString().withMessage("Title is required'"),
+  body("content").notEmpty().isString().withMessage("Content is required"),
   body("userId").custom(async (value, { req }) => {
     // Check if the userId exists in the database
     const user = await db.User.findByPk(value);
