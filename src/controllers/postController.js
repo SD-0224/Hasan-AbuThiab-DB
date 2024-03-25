@@ -52,6 +52,14 @@ const updatePostById = async (req, res) => {
   try {
     const { postId } = req.params;
     const { title, content } = req.body;
+    const auth = await postService.getPostById(postId);
+    if (req.userId !== auth.userId)
+    {
+      return res.status(401).json({
+        success: false,
+        message: "You are not authorized to edit this post",
+      });
+    }
     const post = await postService.updatePost(postId, { title, content });
     res.status(201).json(post);
   } catch (err) {
@@ -69,6 +77,14 @@ const createCategory = async (req, res) => {
   }
 
   try {
+    const auth = await postService.getPostById(postId);
+    if (req.userId !== auth.userId)
+    {
+      return res.status(401).json({
+        success: false,
+        message: "You are not authorized to delete this post",
+      });
+    }
     let category = await postService.createCategoryForPost(
       postId,
       categoryName
@@ -124,6 +140,14 @@ const getAllCommentsForPost = async (req, res) => {
 const deletePost = async (req, res) => {
   const { postId } = req.params;
   try {
+    const auth = await postService.getPostById(postId);
+    if (req.userId !== auth.userId)
+    {
+      return res.status(401).json({
+        success: false,
+        message: "You are not authorized to delete this post",
+      });
+    }
     const post = await postService.deletePost(postId);
     res.status(201).json({ success: post });
   } catch (err) {
