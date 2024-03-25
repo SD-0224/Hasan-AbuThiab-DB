@@ -3,7 +3,7 @@ const app = express();
 import postRoutes from "./src/routes/postRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import methodOverride from "method-override";
-
+ 
 import errorHandler from "./src/middlewares/errorhandler.js"; // Import the error handler middleware
 import db from "./src/models/Index.js";
 import path from "path"; // Import
