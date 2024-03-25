@@ -26,7 +26,7 @@ describe('createPost', () => {
     const createdPost = { id: 1, title: 'Test Post', content: 'This is a test post content', userId: 1 };
     postService.createPost.mockResolvedValueOnce(createdPost);
     validationResult.mockReturnValueOnce({
-        isEmpty: () => true, // Assume validation passes
+        isEmpty: () => true, 
       });
     await postController.createPost(req, res);
 

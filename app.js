@@ -3,7 +3,7 @@ const app = express();
 import postRoutes from "./src/routes/postRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import methodOverride from "method-override";
- 
+import cookieParser from "cookie-parser";
 import errorHandler from "./src/middlewares/errorhandler.js"; // Import the error handler middleware
 import db from "./src/models/Index.js";
 import path from "path"; // Import
@@ -14,6 +14,7 @@ const __dirname = path.dirname(__filename); // Get the directory path
 // Middleware
 app.use(json());
 app.use(urlencoded({ extended: true }));
+app.use(cookieParser());
 
 db.sequelize
   .sync()

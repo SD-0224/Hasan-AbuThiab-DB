@@ -69,12 +69,29 @@ const deleteUser = async (userId) => {
   }
 };
 
+const getUserbyName = async (username) =>
+{
+  try
+  {
+    const user = await db.User.findOne({ where: { username } });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return user;
+  }
+  catch (error)
+  {
+    console.error("error getting the user:", error);
+    throw new Error("error getting the user");
+  }
+}
 const userService = {
   deleteUser,
   getAllUsers,
   getUserById,
   updateUser,
   createUser,
+  getUserbyName,
 };
 
 export default userService;

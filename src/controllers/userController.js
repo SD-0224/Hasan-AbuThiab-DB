@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
 import userService from "../services/userServices.js";
+import jwt from 'jsonwebtoken';
 const createUser = async (req, res) => {
   const errors = validationResult(req);
   try {
@@ -27,6 +28,10 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   const { userId } = req.params;
   try {
+    console.log(req.userId)
+    if (parseInt(userId) !== req.userId) {
+      return res.status(403).json({ message: 'Unauthorized access' });
+    }
     const user = await userService.getUserById(userId);
     res.render("userDetails", { user: user });
   } catch (err) {
@@ -77,6 +82,30 @@ const deleteUser = async (req, res) => {
     throw err;
   }
 };
+
+const loginUser = async (req, res) => {
+
+  try
+  {
+    const { username, password } = req.body;
+    const user = await userService.getUserbyName(username);
+    if(!user || user.password !== password)
+    {
+      return res.status(400).json({success: false, message: "Invalid username or password"});
+    }
+
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.cookie('token', token, { httpOnly: true });
+
+    res.status(200).json({success: true, message: "Login successful", token: token});
+    
+  }
+  catch(err)
+  {
+    console.log(err);
+    res.status(400).json({success: false, message: err.message});
+  }
+}
 export {
   createUser,
   getAllUsers,
@@ -84,4 +113,5 @@ export {
   updateUser,
   deleteUser,
   renderUpdate,
+  loginUser,
 };

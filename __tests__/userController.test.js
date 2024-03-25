@@ -1,13 +1,13 @@
 import { createUser, getAllUsers, getUserById, updateUser, deleteUser, renderUpdate } from '../src/controllers/userController.js';
 import userService from '../src/services/userServices.js';
 import { validationResult } from 'express-validator';
-
-// Mocking express-validator
+import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
+dotenv.config();
 jest.mock('express-validator', () => ({
   validationResult: jest.fn(),
 }));
 
-// Mocking userService
 jest.mock('../src/services/userServices.js', () => ({
   createUser: jest.fn(),
   getAllUsers: jest.fn(),
@@ -57,7 +57,7 @@ describe('User Controller', () => {
       expect(res.json).toHaveBeenCalledWith({ errors: [{ msg: 'Invalid email address' }] });
     });
 
-    // Add more tests for other cases
+  
   });
   describe('getUserById', () => {
     afterEach(() => {
@@ -65,16 +65,19 @@ describe('User Controller', () => {
     });
   
     it('should return user details when a valid userId is provided', async () => {
-      const userId = 1; // Mock userId
-      const req = { params: { userId } }; // Mock request object
+      const userId = 1; 
+      const tokenPayload = { userId }; 
+      const tokenSecret = process.env.JWT_SECRET; 
+      const token = jwt.sign(tokenPayload, tokenSecret); 
+      
+      const req = { params: { userId }, headers: { authorization: `Bearer ${token}` } }; // Mock request object with JWT token
       const res = {
         render: jest.fn(),
-      }; // Mock response object
+      }; 
   
       const user = { id: userId, username: 'testuser', email: 'test@example.com' };
-      // Mock userService.getUserById to return the user
       userService.getUserById.mockResolvedValueOnce(user);
-  
+      req.userId = userId;
       await getUserById(req, res);
   
       expect(userService.getUserById).toHaveBeenCalledWith(userId);
