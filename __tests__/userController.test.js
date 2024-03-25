@@ -67,7 +67,7 @@ describe('User Controller', () => {
     it('should return user details when a valid userId is provided', async () => {
       const userId = 1; 
       const tokenPayload = { userId }; 
-      const tokenSecret = process.env.JWT_SECRET; 
+      const tokenSecret = 'your_secret_key'; 
       const token = jwt.sign(tokenPayload, tokenSecret); 
       
       const req = { params: { userId }, headers: { authorization: `Bearer ${token}` } }; // Mock request object with JWT token
