@@ -15,10 +15,10 @@ import { verifyToken } from "../middlewares/jwtToken.js";
 router.get("/create", (req, res) => {
   res.render("createUser");
 });
-router.get("/login", (req, res) => { 
+router.get("/login", (req, res) => {
   res.render("login");
 });
-router.post("/login",loginUser);
+router.post("/login", loginUser);
 router.post("/create", createUserValidator, createUser);
 router.get("/", getAllUsers);
 router.get("/:userId", verifyToken, getUserById);

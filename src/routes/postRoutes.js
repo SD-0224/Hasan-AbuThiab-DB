@@ -9,9 +9,14 @@ import { verifyToken } from "../middlewares/jwtToken.js";
 const router = Router();
 
 router.get("/create", verifyToken, (req, res) => {
-  res.render("createPost"); 
+  res.render("createPost");
 });
-router.post("/create", verifyToken, createPostValidator, PostController.createPost);
+router.post(
+  "/create",
+  verifyToken,
+  createPostValidator,
+  PostController.createPost
+);
 router.get("/", PostController.getAllPosts);
 router.get("/:postId", PostController.getPostbyId);
 router.get("/update/:postId", verifyToken, PostController.renderUpdate);
@@ -22,19 +27,20 @@ router.put(
   PostController.updatePostById
 );
 router.delete("/delete/:postId", verifyToken, PostController.deletePost);
-router.get("/:postId/createCategory", verifyToken,(req, res) => {
+router.get("/:postId/createCategory", verifyToken, (req, res) => {
   const postId = req.params.postId;
-  res.render("createCategory", { postId }); 
+  res.render("createCategory", { postId });
 });
 router.post(
-  "/:postId/createCategory", verifyToken,
+  "/:postId/createCategory",
+  verifyToken,
   createCategoryValidator,
   PostController.createCategory
 );
 router.get("/:postId/categories", PostController.getCategoriesForPost);
-router.get("/:postId/createComments",verifyToken, (req, res) => {
+router.get("/:postId/createComments", verifyToken, (req, res) => {
   const postId = req.params.postId;
-  res.render("postComments", { postId }); 
+  res.render("postComments", { postId });
 });
 router.post(
   "/:postId/createComments",
